@@ -5,7 +5,9 @@ package com.example.moviesapp;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable {
 
     @SerializedName("id")
     private int id;

@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         progressBarLoading = findViewById(R.id.progressBarLoading);
-
         recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
+
         moviesAdapter = new MoviesAdapter();
         recyclerViewMovies.setAdapter(moviesAdapter);
         recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 2));
@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(Boolean isLoading) {
                 if (isLoading) {
                     progressBarLoading.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     progressBarLoading.setVisibility(View.INVISIBLE);
                 }
             }
@@ -59,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        moviesAdapter.setOnMovieClickListener(new MoviesAdapter.OnMovieClickListener() {
+            @Override
+            public void onMovieClick(Movie movie) {
+                launchNextScreen(movie);
+            }
+        });
+
     }
 
+    private void launchNextScreen(Movie movie) {
+        var intent = MovieDetailActivity.newIntent(this, movie);
+        startActivity(intent);
+    }
 }
