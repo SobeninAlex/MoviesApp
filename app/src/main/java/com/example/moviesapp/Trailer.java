@@ -25,7 +25,7 @@ public class Trailer {
 
     @Override
     public String toString() {
-        return "Trailers{" +
+        return "Trailer{" +
                 "url='" + url + '\'' +
                 ", name='" + name + '\'' +
                 '}';
