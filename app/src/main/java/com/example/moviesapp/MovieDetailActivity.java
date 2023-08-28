@@ -2,6 +2,7 @@ package com.example.moviesapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,6 +56,12 @@ public class MovieDetailActivity extends AppCompatActivity {
             public void onChanged(List<Trailer> trailers) {
                 trailersAdapter.setTrailers(trailers);
             }
+        });
+
+        trailersAdapter.setOnTrailerClickListener(trailer -> {
+            var intent = new Intent(Intent.ACTION_VIEW); //открываем браузер
+            intent.setData(Uri.parse(trailer.getUrl())); //передаем uri
+            startActivity(intent);
         });
     }
 
