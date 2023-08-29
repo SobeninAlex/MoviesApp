@@ -13,6 +13,7 @@ import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -23,6 +24,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     private final MutableLiveData<List<Trailer>> trailers = new MutableLiveData<>();
     private final MutableLiveData<List<Feedback>> feedbacks = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -61,9 +63,25 @@ public class MovieDetailViewModel extends AndroidViewModel {
     }
 
     public void loadFeedback(int movieId) {
+        var loading = isLoading.getValue();
+        if (loading != null && loading) {
+            return;
+        }
         Disposable disposable = ApiFactory.apiService.loadFeedback(movieId, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Throwable {
+                        isLoading.setValue(true);
+                    }
+                })
+                .doAfterTerminate(new Action() {
+                    @Override
+                    public void run() throws Throwable {
+                        isLoading.setValue(false);
+                    }
+                })
                 .map(new Function<FeedbackResponse, List<Feedback>>() {
                     @Override
                     public List<Feedback> apply(FeedbackResponse feedBackResponse) throws Throwable {
