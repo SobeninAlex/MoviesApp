@@ -17,5 +17,10 @@ public interface ApiService {
             @Path("id") int id
     );
 
+    @GET("v1/review?token=BY24RJB-RSSMSH8-P4YBHHG-0CTKPGM")
+    Single<FeedbackResponse> loadFeedback(
+            @Query("movieId") int movieId,
+            @Query("page") int page
+    );
 
 }

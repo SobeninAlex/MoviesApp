@@ -19,8 +19,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MovieDetailViewModel extends AndroidViewModel {
     private static final String TAG = "MovieDetailViewModelTAG";
+    private int page = 1;
 
     private final MutableLiveData<List<Trailer>> trailers = new MutableLiveData<>();
+    private final MutableLiveData<List<Feedback>> feedbacks = new MutableLiveData<>();
+
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public MovieDetailViewModel(@NonNull Application application) {
@@ -28,6 +31,9 @@ public class MovieDetailViewModel extends AndroidViewModel {
     }
     public LiveData<List<Trailer>> getTrailers() {
         return trailers;
+    }
+    public LiveData<List<Feedback>> getFeedbacks() {
+        return feedbacks;
     }
 
     public void loadTrailers(int id) {
@@ -48,7 +54,39 @@ public class MovieDetailViewModel extends AndroidViewModel {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Throwable {
-                        Log.d(TAG, throwable.getMessage());
+                        Log.d(TAG, throwable.toString());
+                    }
+                });
+        compositeDisposable.add(disposable);
+    }
+
+    public void loadFeedback(int movieId) {
+        Disposable disposable = ApiFactory.apiService.loadFeedback(movieId, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<FeedbackResponse, List<Feedback>>() {
+                    @Override
+                    public List<Feedback> apply(FeedbackResponse feedBackResponse) throws Throwable {
+                        return feedBackResponse.getFeedBacks();
+                    }
+                })
+                .subscribe(new Consumer<List<Feedback>>() {
+                    @Override
+                    public void accept(List<Feedback> feedBacksList) throws Throwable {
+                        List<Feedback> loadedFeedback = feedbacks.getValue();
+                        if (loadedFeedback != null) {
+                            loadedFeedback.addAll(feedBacksList);
+                            feedbacks.setValue(loadedFeedback);
+                        }
+                        else {
+                            feedbacks.setValue(feedBacksList);
+                        }
+                        page++;
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.d(TAG, throwable.toString());
                     }
                 });
         compositeDisposable.add(disposable);

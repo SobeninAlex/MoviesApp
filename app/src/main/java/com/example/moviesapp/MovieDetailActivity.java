@@ -30,6 +30,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerViewTrailers;
     private TrailersAdapter trailersAdapter;
 
+    private FeedbackAdapter feedbackAdapter;
+    private RecyclerView recyclerViewFeedback;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         trailersAdapter = new TrailersAdapter();
         recyclerViewTrailers.setAdapter(trailersAdapter);
+
+        feedbackAdapter = new FeedbackAdapter();
+        recyclerViewFeedback.setAdapter(feedbackAdapter);
 
         Movie movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
 
@@ -63,6 +69,22 @@ public class MovieDetailActivity extends AppCompatActivity {
             intent.setData(Uri.parse(trailer.getUrl())); //передаем uri
             startActivity(intent);
         });
+
+        viewModel.loadFeedback(movie.getId());
+        viewModel.getFeedbacks().observe(this, new Observer<List<Feedback>>() {
+            @Override
+            public void onChanged(List<Feedback> feedBacks) {
+                feedbackAdapter.setFeedbackList(feedBacks);
+            }
+        });
+
+        feedbackAdapter.setOnReachEndListener(new FeedbackAdapter.OnReachEndListener() {
+            @Override
+            public void onReachEnd() {
+                viewModel.loadFeedback(movie.getId());
+            }
+        });
+
     }
 
     public static Intent newIntent(Context context, Movie movie) {
@@ -77,5 +99,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         textViewYear = findViewById(R.id.textViewYear);
         textViewDescription = findViewById(R.id.textViewDescription);
         recyclerViewTrailers = findViewById(R.id.recyclerViewTrailers);
+        recyclerViewFeedback = findViewById(R.id.recyclerViewFeedback);
     }
 }
