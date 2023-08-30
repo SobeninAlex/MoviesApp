@@ -70,20 +70,20 @@ public class MovieDetailActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        viewModel.loadFeedback(movie.getId());
         viewModel.getFeedbacks().observe(this, new Observer<List<Feedback>>() {
             @Override
             public void onChanged(List<Feedback> feedBacks) {
                 feedbackAdapter.setFeedbackList(feedBacks);
             }
         });
+        viewModel.loadFeedback(movie.getId());
 
-        feedbackAdapter.setOnReachEndListener(new FeedbackAdapter.OnReachEndListener() {
-            @Override
-            public void onReachEnd() {
-                viewModel.loadFeedback(movie.getId());
-            }
-        });
+//        feedbackAdapter.setOnReachEndListener(new FeedbackAdapter.OnReachEndListener() {
+//            @Override
+//            public void onReachEnd() {
+//                viewModel.loadFeedback(movie.getId());
+//            }
+//        });
 
     }
 

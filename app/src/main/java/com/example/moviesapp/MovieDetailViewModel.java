@@ -99,6 +99,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
                         else {
                             feedbacks.setValue(feedBacksList);
                         }
+                        Log.d(TAG, "Loaded " + page);
                         page++;
                     }
                 }, new Consumer<Throwable>() {

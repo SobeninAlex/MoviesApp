@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -38,45 +39,34 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
     @Override
     public void onBindViewHolder(@NonNull FeedbackViewHolder holder, int position) {
         var feedback = feedbackList.get(position);
-        var type = feedback.getType();
-
-//        int backgroundID;
-//        if (type == "Позитивный") {
-//            backgroundID = android.R.color.holo_green_light;
-//        }
-//        else if (type == "Нейтральный") {
-//            backgroundID = android.R.color.holo_orange_light;
-//        }
-//        else {
-//            backgroundID = android.R.color.holo_red_light;
-//        }
-
-
-//        switch (type) {
-//            case "Позитивный" -> backgroundID = android.R.color.holo_green_light;
-//            case "Нейтральный" -> backgroundID = android.R.color.holo_orange_light;
-//            default -> backgroundID = android.R.color.holo_red_light;
-//        }
-
-
-//        var drawable = ContextCompat.getDrawable(holder.itemView.getContext(), backgroundID);
-//        holder.linearLayoutFeedback.setBackground(drawable);
 
         holder.textViewAuthor.setText(feedback.getAuthor());
         holder.textViewFeedback.setText(feedback.getReview());
 
-        if (position >= feedbackList.size() - 2 && onReachEndListener != null) {
+        var type = feedback.getType();
+        int colorID = android.R.color.darker_gray;
+        if (type != null) {
+            switch (type) {
+                case "Позитивный" -> colorID = android.R.color.holo_green_light;
+                case "Нейтральный" -> colorID = android.R.color.holo_orange_light;
+                default -> colorID = android.R.color.holo_red_light;
+            }
+        }
+        var color = ContextCompat.getColor(holder.itemView.getContext(), colorID);
+        holder.linearLayoutFeedback.setBackgroundColor(color);
+
+        if (position >= feedbackList.size() - 1 && onReachEndListener != null) {
             onReachEndListener.onReachEnd();
         }
-    }
-
-    interface OnReachEndListener {
-        void onReachEnd();
     }
 
     @Override
     public int getItemCount() {
         return feedbackList.size();
+    }
+
+    interface OnReachEndListener {
+        void onReachEnd();
     }
 
     static class FeedbackViewHolder extends RecyclerView.ViewHolder {
