@@ -3,12 +3,18 @@ package com.example.moviesapp;
 //POJO -> Plain Old Java Object
 //классы у которых просто есть поля, конструктор, геттеры и сеттеры
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+@Entity(tableName = "favorite_movies")
 public class Movie implements Serializable {
 
+    @PrimaryKey
     @SerializedName("id")
     private int id;
 
@@ -22,9 +28,11 @@ public class Movie implements Serializable {
     private String year;
 
     @SerializedName("poster")
+    @Embedded
     private Poster poster;
 
     @SerializedName("rating")
+    @Embedded
     private Rating rating;
 
     public Movie(int id, String name, String description, String year, Poster poster, Rating rating) {

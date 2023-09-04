@@ -1,9 +1,12 @@
 package com.example.moviesapp;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -61,14 +64,27 @@ public class MainActivity extends AppCompatActivity {
         moviesAdapter.setOnMovieClickListener(new MoviesAdapter.OnMovieClickListener() {
             @Override
             public void onMovieClick(Movie movie) {
-                launchNextScreen(movie);
+                var intent = MovieDetailActivity.newIntent(MainActivity.this, movie);
+                startActivity(intent);
             }
         });
 
     }
 
-    private void launchNextScreen(Movie movie) {
-        var intent = MovieDetailActivity.newIntent(this, movie);
-        startActivity(intent);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) { //для отображения меню
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    //когда происходит клик по элементу меню вызываеться метод onOptionsItemSelected
+    //тот элемент по которому был клик прилетает в качестве параметра в этот метод
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.itemFavourite) {
+            var intent = FavouriteMoviesActivity.newIntent(this);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

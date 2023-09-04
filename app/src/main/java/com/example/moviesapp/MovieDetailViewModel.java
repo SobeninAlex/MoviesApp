@@ -28,14 +28,35 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    private final MovieDao movieDao;
+
     public MovieDetailViewModel(@NonNull Application application) {
         super(application);
+        movieDao = MovieDatabase.getInstance(application).movieDao();
     }
     public LiveData<List<Trailer>> getTrailers() {
         return trailers;
     }
     public LiveData<List<Feedback>> getFeedbacks() {
         return feedbacks;
+    }
+
+    public LiveData<Movie> getFavoriteMovie(int movieID) {
+        return movieDao.getFavoriteMovie(movieID);
+    }
+
+    public void insertMovie(Movie movie) {
+        Disposable disposable = movieDao.insertMovie(movie)
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+        compositeDisposable.add(disposable);
+    }
+
+    public void removeMovie(int movieID) {
+        Disposable disposable = movieDao.removeMovie(movieID)
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+        compositeDisposable.add(disposable);
     }
 
     public void loadTrailers(int id) {
