@@ -1,4 +1,4 @@
-package com.example.moviesapp;
+package com.example.moviesapp.adapters;
 
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviesapp.pojo.Movie;
+import com.example.moviesapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,11 +82,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         return movies.size();
     }
 
-    interface OnReachEndListener {
+    public interface OnReachEndListener {
         void onReachEnd();
     }
 
-    interface OnMovieClickListener {
+    public interface OnMovieClickListener {
         void onMovieClick(Movie movie);
     }
 

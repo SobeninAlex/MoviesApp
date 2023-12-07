@@ -1,4 +1,4 @@
-package com.example.moviesapp;
+package com.example.moviesapp.ui;
 
 import android.app.Application;
 import android.util.Log;
@@ -7,6 +7,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.moviesapp.api.ApiFactory;
+import com.example.moviesapp.pojo.Feedback;
+import com.example.moviesapp.pojo.FeedbackResponse;
+import com.example.moviesapp.pojo.Movie;
+import com.example.moviesapp.database.MovieDao;
+import com.example.moviesapp.database.MovieDatabase;
+import com.example.moviesapp.pojo.Trailer;
+import com.example.moviesapp.pojo.TrailerResponse;
 
 import java.util.List;
 

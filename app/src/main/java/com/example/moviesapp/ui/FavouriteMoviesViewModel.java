@@ -1,10 +1,14 @@
-package com.example.moviesapp;
+package com.example.moviesapp.ui;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.example.moviesapp.pojo.Movie;
+import com.example.moviesapp.database.MovieDao;
+import com.example.moviesapp.database.MovieDatabase;
 
 import java.util.List;
 

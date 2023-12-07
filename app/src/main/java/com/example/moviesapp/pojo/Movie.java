@@ -1,4 +1,4 @@
-package com.example.moviesapp;
+package com.example.moviesapp.pojo;
 
 //POJO -> Plain Old Java Object
 //классы у которых просто есть поля, конструктор, геттеры и сеттеры

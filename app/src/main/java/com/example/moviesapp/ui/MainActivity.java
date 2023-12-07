@@ -1,4 +1,4 @@
-package com.example.moviesapp;
+package com.example.moviesapp.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +12,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.moviesapp.R;
+import com.example.moviesapp.adapters.MoviesAdapter;
+import com.example.moviesapp.pojo.Movie;
 
 import java.util.List;
 

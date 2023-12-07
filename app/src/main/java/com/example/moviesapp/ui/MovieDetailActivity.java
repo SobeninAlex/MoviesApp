@@ -1,4 +1,4 @@
-package com.example.moviesapp;
+package com.example.moviesapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviesapp.pojo.Feedback;
+import com.example.moviesapp.adapters.FeedbackAdapter;
+import com.example.moviesapp.pojo.Movie;
+import com.example.moviesapp.R;
+import com.example.moviesapp.pojo.Trailer;
+import com.example.moviesapp.adapters.TrailersAdapter;
 
 import java.util.List;
 

@@ -1,9 +1,11 @@
-package com.example.moviesapp;
+package com.example.moviesapp.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+
+import com.example.moviesapp.pojo.Movie;
 
 import java.util.List;
 

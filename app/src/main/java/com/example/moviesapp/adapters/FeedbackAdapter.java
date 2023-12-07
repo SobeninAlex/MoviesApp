@@ -1,4 +1,4 @@
-package com.example.moviesapp;
+package com.example.moviesapp.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.moviesapp.pojo.Feedback;
+import com.example.moviesapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
